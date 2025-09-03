@@ -273,16 +273,19 @@ func main() {
 	)
 	flag.Parse()
 
-	config := &promslog.Config{
-		Level:  &promslog.AllowedLevel{},
-		Format: &promslog.AllowedFormat{},
+	level := promslog.NewLevel()
+	if err := level.Set(*logLevel); err != nil {
+		panic(err)
 	}
 
-	if err := config.Level.Set(*logLevel); err != nil {
+	format := promslog.NewFormat()
+	if err := format.Set(*logFormat); err != nil {
 		panic(err)
 	}
-	if err := config.Format.Set(*logFormat); err != nil {
-		panic(err)
+
+	config := &promslog.Config{
+		Level:  level,
+		Format: format,
 	}
 
 	log := promslog.New(config)
