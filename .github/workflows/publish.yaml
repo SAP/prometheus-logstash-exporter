@@ -19,6 +19,7 @@ jobs:
   publish-docker:
     name: Publish Docker image
     runs-on: ubuntu-24.04
+    environment: release
     permissions:
       contents: read
       packages: write
